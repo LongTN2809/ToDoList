@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" i
+    ntegrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../CSS/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h2>MY TO-DO LIST</h2>
+      <i class="fa-solid fa-rectangle-list list-icon"></i>
+    </header>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num" id="st-total"></span>
+        <label for="st-total">Total</label>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="st-done"></span>
+        <label for="st-done">Done</label>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="st-left"></span>
+        <label for="st-left">Left</label>
+      </div>
+    </div>
+    <div class="place-input">
+      <select name="priority" id="priority">
+        <option value="" selected>Choose Priority</option>
+        <option value="1">High</option>
+        <option value="2">Medium</option>
+        <option value="3">Low</option>
+      </select>
+      <input type="text" name="" id="task-inp" placeholder="Add your new task">
+      <button onclick="addToDo()">ADD</button>
+    </div>
+    <div class="place-list">
+      <div class="list-title">
+        <p>TASK</p>
+        <select name="sort" id="sort">
+          <option value="" selected>SORT BY</option>
+          <option value="DESC">Low to High</option>
+          <option value="ASC">High to Low</option>
+        </select>
+      </div>
+      <hr>
+      <ul id="list">
+
+      </ul>
+      <div id="msg">
+        <p>YOU HAVE NOT ANY TASK TO FINISH!</p>
+      </div>
+    </div>
+  </div>
+  <script src="../JS/helpers.js"></script>
+  <script src="../JS/api.js"></script>
+  <script src="../JS/app.js"></script>
+  </script>
+</body>
+
+</html>
