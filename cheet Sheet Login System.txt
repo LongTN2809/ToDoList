@@ -1,0 +1,136 @@
+1️⃣ Ý tưởng cốt lõi
+LOGIN  = tạo session
+AUTH   = kiểm tra session
+
+Session dùng để server biết user nào đang đăng nhập.
+
+2️⃣ Flow hoàn chỉnh
+User nhập username + password
+        ↓
+JS gửi fetch POST /login
+        ↓
+PHP kiểm tra database
+        ↓
+Nếu đúng → tạo session
+$_SESSION['user_id'] = id
+        ↓
+JS redirect index.html
+        ↓
+index.html load
+        ↓
+JS gọi API getUser
+        ↓
+PHP kiểm tra session
+        ↓
+Nếu có session → trả user
+        ↓
+JS hiển thị username
+3️⃣ API cần có
+🔑 Login
+POST /api/user.php?action=login
+
+JS:
+
+fetch("api/user.php?action=login",{
+ method:"POST",
+ headers:{"Content-Type":"application/json"},
+ body: JSON.stringify({username,password})
+})
+
+PHP:
+
+if($user && password_verify($password,$user['PASSWORD'])){
+    $_SESSION['user_id'] = $user['id'];
+}
+👤 Get user
+GET /api/user.php?action=getUser
+
+PHP:
+
+if(!isset($_SESSION['user_id'])){
+    echo json_encode(["success"=>false]);
+    exit;
+}
+4️⃣ Frontend structure
+login.html
+submit form
+↓
+fetch login
+↓
+success → index.html
+index.html
+trang load
+↓
+fetch getUser
+↓
+nếu chưa login → login.html
+↓
+nếu login → hiển thị dashboard
+5️⃣ Rule quan trọng
+❌ Không check session ở login
+
+Sai:
+
+if(!isset($_SESSION['user_id']))
+✅ Chỉ check session ở API cần login
+
+Ví dụ:
+
+getUser
+getTasks
+createTask
+deleteTask
+6️⃣ Structure project gọn
+project/
+
+HTML/
+   login.html
+   index.html
+
+JS/
+   login.js
+   index.js
+
+PHP/
+   api/
+       user.php
+       task.php
+7️⃣ Lỗi phổ biến (bạn vừa gặp)
+❌ Check session ở đầu file
+
+→ login bị block
+
+❌ Đặt getUser trong POST
+
+→ fetch GET không chạy
+
+❌ Redirect ở quá nhiều nơi
+
+→ logic bị rối
+
+8️⃣ Công thức nhớ nhanh
+Login page
+   ↓
+POST login
+   ↓
+Session created
+   ↓
+Redirect index
+   ↓
+index fetch getUser
+   ↓
+Check session
+   ↓
+Show user
+9️⃣ Khi làm API mới
+
+Nếu API cần login:
+
+if(!isset($_SESSION['user_id'])){
+    echo json_encode(["success"=>false]);
+    exit;
+}
+🔟 Câu thần chú cho hệ login
+Session là "thẻ nhận dạng user"
+Browser giữ cookie
+Server giữ dữ liệu session

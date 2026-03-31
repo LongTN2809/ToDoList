@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      i
+      ntegrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="../CSS/auth.css">
+  </head>
+
+  <body>
+    <!-- Login form -->
+    <form action="" id="loginForm">
+      <div class="container">
+        <div class="login">
+          <div class="login__title">
+            <h1>LOGIN</h1>
+          </div>
+          <div class="login__input">
+            <div class="form-group">
+              <div class="name-input">
+                <input type="text" name="username" id="name" placeholder=" " />
+                <label for="name">Username</label>
+              </div>
+              <span class="field-error"></span>
+            </div>
+            <div class="form-group">
+              <div class="password-input">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder=" "
+                />
+                <label for="password">Password</label>
+                <i class="fa-solid fa-lock lock"></i>
+              </div>
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <div class="login__btn">
+            <button class="submit-btn" type="submit">Login</button>
+          </div>
+          <div class="register-box">
+            <span>Don't have account?</span>
+            <button id="register-link" class="formLink" type="button">
+              Register
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Register form -->
+    <form action="" id="registerForm" class="hidden">
+      <div class="container">
+        <div class="register">
+          <div class="register__title">
+            <h1>REGISTER</h1>
+          </div>
+          <div class="register__input">
+            <div class="form-group">
+              <div class="name-input">
+                <input type="text" name="username" id="name" placeholder=" " />
+                <label for="name">Username</label>
+              </div>
+              <span class="field-error"></span>
+            </div>
+            <div class="form-group">
+              <div class="password-input">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder=" "
+                />
+                <label for="password">Password</label>
+                <i class="fa-solid fa-lock lock"></i>
+              </div>
+              <span class="field-error"></span>
+            </div>
+            <div class="form-group">
+              <div class="passwordConfirm-input">
+                <input
+                  type="password"
+                  name="passwordConfirm"
+                  id="passwordConfirm"
+                  placeholder=" "
+                />
+                <label for="passwordConfirm">Password Confirm</label>
+                <i class="fa-solid fa-lock lock"></i>
+              </div>
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <div class="register__btn">
+            <button class="submit-btn" type="submit">Register</button>
+          </div>
+          <div class="login-box">
+            <span>Did you have account?</span>
+            <button id="login-link" class="formLink" type="button">
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="box_msg">
+      <p id="form-message"></p>
+    </div>
+
+    <script type="module" src="../JS/auth/auth.js"></script>
+    <script type="module" src="../JS/api/userApi.js"></script>
+    <script type="module" src="../JS/auth/validator.js"></script>
+    <script type="module" src="../JS/auth/login.js"></script>
+    <script type="module" src="../JS/auth/register.js"></script>
+    <script type="module" src="../JS/auth/forgotPassword.js"></script>
+  </body>
+</html>

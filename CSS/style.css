@@ -17,8 +17,10 @@ html {
 body {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 }
 
 .container {
@@ -365,3 +367,8 @@ hr {
   border-top: 1px solid #e8f1ff;
   margin-bottom: 15px;
 }
+
+.hello_user{
+  color: rgb(0, 255, 221);
+}
+

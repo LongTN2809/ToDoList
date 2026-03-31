@@ -1,17 +1,17 @@
 function apiGetTasks(sortValue = "") {
     let url = "";
   if(sortValue){
-    url = `../PHP/index.php?sortValue=${sortValue}`;
+    url = `../PHP/api/task.php?sortValue=${sortValue}`;
     return fetch(url) .then((response)=> response.json());
   }else{
-    url = "../PHP/index.php";
+    url = "../PHP/api/task.php";
     return fetch(url) .then((response)=> response.json());
   }
 }
 
 function apiCreateTask(data) {
     if(data){
-        return fetch("../PHP/index.php",{
+        return fetch("../PHP/api/task.php",{
             method:"POST",
             headers:{
                 "Content-type": "Application/json"
@@ -26,7 +26,7 @@ function apiCreateTask(data) {
 
 function apiDeleteTask(id) {
    if(id){
-    return fetch(`../PHP/index.php?id=${id}`,{
+    return fetch(`../PHP/api/task.php?id=${id}`,{
         method: "DELETE",
     })
     .then((response)=>response.json());
@@ -36,14 +36,16 @@ function apiDeleteTask(id) {
 }
 
 function apiPatchTask(id, data) {
+    console.log(id , data);
    if(id && data){
-    return fetch(`../PHP/index.php?id=${id}`,{
+    return fetch(`../PHP/api/task.php?id=${id}`,{
         method:"PATCH",
         headers:{
             "Content-type": "Application/json"
         },
-        method: JSON.stringify(data)
+        body: JSON.stringify(data)
     })
     .then((response) => response.json());
    }
 }
+

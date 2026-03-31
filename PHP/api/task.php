@@ -1,11 +1,13 @@
 <?php
+session_start();
 ob_start(); // ← bắt hết output lại
-include("connect.inc");
+include("../connect.inc");
 ob_clean(); // ← xoá sạch output trước khi gửi JSON
 header("Content-type: application/json");
 $data = json_decode(file_get_contents("php://input"), true);
 
 $method = $_SERVER['REQUEST_METHOD'];
+
 
 // Hàm lấy data
 function getData($res)

@@ -112,7 +112,7 @@ function createTagsLi(todo) {
                 editInput.remove();
 
                 // Edit title
-                apiPatchTask(todo.id, {
+                apiPatchTask(todo.id , {
                     title: newTitle,
                     typeEdit: "title"
                 })
