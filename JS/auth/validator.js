@@ -22,9 +22,14 @@ function clearFieldError(input) {
 
 export function showFormError(message) {
   let formMsg = document.querySelector("#form-message");
-  console.log(formMsg);
-  console.log(message);
+  let errToast = document.querySelector(".error-toast");
   formMsg.textContent = message;
+  errToast.classList.add("show");
+}
+
+export function hideErrorToast(){
+  let errToast = document.querySelector(".error-toast");
+  errToast.classList.remove("show");
 }
 
 export function validateForm(form, data) {

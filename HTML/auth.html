@@ -26,7 +26,7 @@
           <div class="login__input">
             <div class="form-group">
               <div class="name-input">
-                <input type="text" name="username" id="name" placeholder=" " />
+                <input type="text" autocomplete="off" name="username" id="name" placeholder=" " />
                 <label for="name">Username</label>
               </div>
               <span class="field-error"></span>
@@ -35,6 +35,7 @@
               <div class="password-input">
                 <input
                   type="password"
+                  autocomplete="new-password"
                   name="password"
                   id="password"
                   placeholder=" "
@@ -47,6 +48,11 @@
           </div>
           <div class="login__btn">
             <button class="submit-btn" type="submit">Login</button>
+          </div>
+          <div class="error-toast">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p id="form-message"></p>
+            <i class="fa-solid fa-x"></i>
           </div>
           <div class="register-box">
             <span>Don't have account?</span>
@@ -68,7 +74,7 @@
           <div class="register__input">
             <div class="form-group">
               <div class="name-input">
-                <input type="text" name="username" id="name" placeholder=" " />
+                <input type="text" autocomplete="off" name="username" id="name" placeholder=" " />
                 <label for="name">Username</label>
               </div>
               <span class="field-error"></span>
@@ -77,6 +83,7 @@
               <div class="password-input">
                 <input
                   type="password"
+                  autocomplete="new-password"
                   name="password"
                   id="password"
                   placeholder=" "
@@ -90,6 +97,7 @@
               <div class="passwordConfirm-input">
                 <input
                   type="password"
+                  autocomplete="new-password"
                   name="passwordConfirm"
                   id="passwordConfirm"
                   placeholder=" "
@@ -103,6 +111,11 @@
           <div class="register__btn">
             <button class="submit-btn" type="submit">Register</button>
           </div>
+          <div class="error-toast">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p id="form-message"></p>
+            <i class="fa-solid fa-x" onclick="hideErrorToast()"></i>
+          </div>
           <div class="login-box">
             <span>Did you have account?</span>
             <button id="login-link" class="formLink" type="button">
@@ -112,10 +125,6 @@
         </div>
       </div>
     </form>
-
-    <div class="box_msg">
-      <p id="form-message"></p>
-    </div>
 
     <script type="module" src="../JS/auth/auth.js"></script>
     <script type="module" src="../JS/api/userApi.js"></script>

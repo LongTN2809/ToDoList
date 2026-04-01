@@ -1,7 +1,5 @@
-import { validateForm } from "./validator.js";
-import { showFormError } from "./validator.js";
+import { validateForm , showFormError , clearFieldErrorForm , hideErrorToast } from "./validator.js";
 import { apiLogin } from "../api/userApi.js";
-import { clearFieldErrorForm } from "./validator.js";
 let form = document.querySelector("#loginForm");
 
 form.addEventListener("submit", (e) => {
@@ -19,9 +17,13 @@ form.addEventListener("submit", (e) => {
                 window.location.href = "../../TO_DO_LIST_PROJECT/HTML/index.html"
             }else{
             showFormError(result.msg);
+            
             }
         })
 
 })
 
 clearFieldErrorForm(form);
+
+// Ham click an hop thong bao loi
+document.querySelector(".fa-x").addEventListener("click", hideErrorToast);

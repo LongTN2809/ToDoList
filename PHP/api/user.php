@@ -44,21 +44,21 @@ if ($method == 'POST') {
                 exit;
             }
 
-            $hashPassword = password_hash($password , PASSWORD_ARGON2ID); // hass password
+            $hashPassword = password_hash($password, PASSWORD_ARGON2ID); // hass password
 
-            $insertUser = "INSERT INTO user (username , password) VALUES ('".$username."' , '".$hashPassword."')";
+            $insertUser = "INSERT INTO user (username , password) VALUES ('" . $username . "' , '" . $hashPassword . "')";
 
-            $resultInsertUser = mysqli_query($conn , $insertUser);
-            if($resultInsertUser){
+            $resultInsertUser = mysqli_query($conn, $insertUser);
+            if ($resultInsertUser) {
                 $user_id = mysqli_insert_id($conn);
                 $_SESSION['user_id'] = $user_id;
-                echo json_encode(["success" => true , "msg" => "Register successfully!"]);
+                echo json_encode(["success" => true, "msg" => "Register successfully!"]);
             }
             break;
         case 'logout':
-        session_destroy();
-        echo json_encode(["success" => true]);
-        break;
+            session_destroy();
+            echo json_encode(["success" => true]);
+            break;
         default:
             echo json_encode(["success" => false, "msg" => "Invalid action"]);
             break;
