@@ -37,3 +37,8 @@ function standardizeValue(inputValue) {
     return inputValue;
 }
 
+function goToAuth(){
+    window.location.href = "../../TO_DO_LIST_PROJECT/HTML/auth.html";
+}
+
+

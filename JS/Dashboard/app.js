@@ -173,7 +173,6 @@ function addToDo() {
     apiCreateTask({
         title: standarValueInp,
         completed: false,
-        userId: 1,
         priority: Number(prio)
     })
         .then((data) => {

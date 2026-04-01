@@ -123,7 +123,7 @@ input:not(:placeholder-shown) {
 }
 
 .login__btn button:hover,
-.register__btn button {
+.register__btn button:hover {
   background-color: #2f3bb5;
   transform: translateY(-5px);
 }

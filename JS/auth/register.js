@@ -6,6 +6,7 @@ let form = document.querySelector("#registerForm");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    console.log(form);
     let formData = new FormData(form);
     let data = Object.fromEntries(formData.entries()); // formData.entries() trả về 1 iterator , Object.fromEntries dùng iterator đó để duyệt
     if (!validateForm(form , data)) return;

@@ -8,6 +8,12 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+// Lấy id của user
+if(!isset($_SESSION['user_id'])){
+    echo json_encode(['error' => "Unauthorized"]);
+    exit;
+}
+$user_id = $_SESSION['user_id'];
 
 // Hàm lấy data
 function getData($res)
@@ -29,13 +35,12 @@ function getData($res)
 
 // Load data
 if ($method === 'GET') {
-    $userId = (int) ($_GET['userId'] ?? 1);
 
     if (isset($_GET['sortValue']) && $_GET['sortValue']) {
         $sortValue = in_array($_GET['sortValue'], ['ASC', 'DESC']) ? $_GET['sortValue'] : 'ASC';
-        $result = mysqli_query($conn, "SELECT * FROM task WHERE userId = $userId ORDER BY priority $sortValue");
+        $result = mysqli_query($conn, "SELECT * FROM task WHERE userId = $user_id ORDER BY priority $sortValue");
     } else {
-        $result = mysqli_query($conn, "SELECT * FROM task WHERE userId = $userId LIMIT 10");
+        $result = mysqli_query($conn, "SELECT * FROM task WHERE userId = $user_id LIMIT 10");
     }
 
     if ($result) {
@@ -47,11 +52,7 @@ if ($method === 'GET') {
 // Sort task
 if (isset($_GET['sortValue']) && $_GET['sortValue']) {
     $sortValue = $_GET['sortValue'];
-    $userId = $data['userId'];
     echo json_encode(["Sort value" => $sortValue, "User id" => $userId]);
-    // error_log("==== MY DEBUG ====");
-    // error_log("Sort value " . $sortValue);
-    // error_log("User id " . $userId);
     $result = mysqli_query($conn, "SELECT * FROM task WHERE userId = 1 ORDER BY priority $sortValue");
     if ($result) {
         getData($result);
@@ -64,7 +65,7 @@ if (isset($_GET['sortValue']) && $_GET['sortValue']) {
 
 // Insert Data
 if ($method === 'POST') {
-    if (!$data || !isset($data['userId'], $data['title'])) {
+    if (!$data || !isset($data['title'])) {
         $response = ["err" => "Data is not valid"];
         echo json_encode($response);
         exit;
@@ -72,7 +73,7 @@ if ($method === 'POST') {
     $complete = $data['completed'] ? 1 : 0;
 
     $insertQuery = "INSERT INTO task ( userId , title , complete , priority)
-                        VALUES ('" . $data['userId'] . "' , '" . $data['title'] . "' , '" . $complete . "' , '" . $data['priority'] . "')";
+                        VALUES ('" . $user_id . "' , '" . $data['title'] . "' , '" . $complete . "' , '" . $data['priority'] . "')";
     $isQuerySuccess = mysqli_query($conn, $insertQuery);
 
     if ($isQuerySuccess) {
@@ -82,7 +83,7 @@ if ($method === 'POST') {
         $row = mysqli_fetch_assoc($result);
         $response = [
             "id" => $newId,
-            "userId" => $data['userId'],
+            "userId" => $user_id,
             "title" => $data['title'],
             "completed" => $data['completed'],
             "create_Time" => $row['created_at'],

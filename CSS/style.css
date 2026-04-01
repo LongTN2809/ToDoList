@@ -372,3 +372,32 @@ hr {
   color: rgb(0, 255, 221);
 }
 
+.auth-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.auth-nav button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.auth-nav button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.05);
+}
+
+.auth-nav button:active {
+  transform: scale(0.96);
+}

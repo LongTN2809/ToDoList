@@ -35,11 +35,13 @@ export function validateForm(form, data) {
   let hasErr = false;
 
   if (!data.username.trim()) {
+    console.log(nameInp);
     showFieldError(nameInp, "Please enter your username!");
     hasErr = true;
   }
 
   if (!data.password) {
+    console.log(typeof data.password);
     showFieldError(passInp, "Please enter your password!");
     hasErr = true;
   } else if (data.password.length < 6) {
@@ -47,20 +49,20 @@ export function validateForm(form, data) {
     hasErr = true;
   }
 
-  if (
-    passConfirm &&
-    data.passConfirm !== undefined &&
-    data.passConfirm !== data.password
-  ) {
-    showFieldError(passConfirm, "Password confirm is invalid!");
-    hasErr = true;
+  if (passConfirm) {
+    if (!data.passwordConfirm) {
+      showFieldError(passConfirm, "Please enter password confirm!");
+      hasErr = true;
+    }else if(data.passwordConfirm !== data.password){
+      showFieldError(passConfirm , "Password confirm is invalid!");
+      hasErr = true;
+    }
   }
 
   return !hasErr;
 }
 
 export function clearFieldErrorForm(form) {
-
   nameInp = form.querySelector("#name");
   passInp = form.querySelector("#password");
   passConfirm = form.querySelector("#passwordConfirm");

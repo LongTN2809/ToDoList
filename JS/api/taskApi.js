@@ -45,7 +45,6 @@ function apiPatchTask(id, data) {
         },
         body: JSON.stringify(data)
     })
-    .then((response) => response.json());
    }
 }
 

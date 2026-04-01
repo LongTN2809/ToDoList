@@ -17,3 +17,9 @@ export function apiRegister(data){
     body: JSON.stringify(data)
    })
 }
+
+export function apiLogOut(){
+    return fetch("../PHP/api/user.php?action=logout", {
+    method: "POST"
+})
+}
