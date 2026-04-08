@@ -1,87 +1,151 @@
 <?php
 session_start();
-ob_start(); // ← bắt hết output lại
+ob_start(); // Bắt toàn bộ output
 include("../connect.inc");
-ob_clean(); // ← xoá sạch output trước khi gửi JSON
+ob_clean(); // Xoá output trước khi trả JSON
 header("Content-type: application/json");
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? "";
+ // Lưu lại tên gốc mà người dùng muốn đặt trước khi lower
 // LOGIN và REGISTER
 if ($method == 'POST') {
-
+    $username = $data['username'] ?? "";
+    $username = mb_strtolower($data['username'], 'UTF-8'); // Chuyển username thành chữ thường để dễ so sánh vì mysql không phân biệt hoa / thường
+    $password = $data['password'] ?? "";
+    $passwordConfirm = $data['passwordConfirm'] ?? "";
     switch ($action) {
+
         case 'login':
-            $username = $data['username'] ?? "";
-            $password = $data['password'] ?? "";
+            // Kiểm tra dữ liệu đầu vào
             if (!$username || !$password) {
                 echo json_encode(["success" => false, "msg" => "Missing data"]);
                 exit;
             }
 
-            $checkUsername = "SELECT * FROM user WHERE username = '" . $username . "'";
-            $result = mysqli_query($conn, $checkUsername);
-            $user = mysqli_fetch_assoc($result);
+            // Prepare statement để tránh SQL Injection
+            $getUserByUsername = $pdo->prepare("SELECT * FROM user WHERE username = ?");
+
+            // execute nhận 1 array để truyền dữ liệu vào dấu ?
+            $getUserByUsername->execute([$username]);
+
+            // Vì chỉ lấy 1 user nên dùng fetch()
+            $user = $getUserByUsername->fetch();
+
+            // Kiểm tra password hash
             if ($user && password_verify($password, $user['PASSWORD'])) {
-                $_SESSION['user_id'] = $user['id']; // Tao session rieng cho moi user
-                echo json_encode(['success' => true, 'msg' => "Login successfully!"]);
+
+                // Tạo session cho user
+                $_SESSION['user_id'] = $user['id'];
+
+                echo json_encode([
+                    'success' => true,
+                    'msg' => "Login successfully!"
+                ]);
+
             } else {
-                echo json_encode(['success' => false, 'msg' => "Invalid username or password!"]);
+
+                echo json_encode([
+                    'success' => false,
+                    'msg' => "Invalid username or password!"
+                ]);
             }
 
             break;
+
         case 'register':
-            $username = $data['username'] ?? "";
-            $password = $data['password'] ?? "";
-            $passwordConfirm = $data['passwordConfirm'] ?? "";
+
+
+
+            // Kiểm tra dữ liệu đầu vào
             if (!$username || !$password || !$passwordConfirm) {
                 echo json_encode(["success" => false, "msg" => "Missing data!"]);
                 exit;
             }
+
             if ($password !== $passwordConfirm) {
                 echo json_encode(["success" => false, "msg" => "Password confirm is invalid!"]);
                 exit;
             }
 
-            $hashPassword = password_hash($password, PASSWORD_ARGON2ID); // hass password
+            // Hash password
+            $hashPassword = password_hash($password, PASSWORD_ARGON2ID);
 
-            $insertUser = "INSERT INTO user (username , password) VALUES ('" . $username . "' , '" . $hashPassword . "')";
+            // Prepare statement để insert user
+            $insertUser = $pdo->prepare(
+                "INSERT INTO user (username, password) VALUES (?, ?)"
+            );
 
-            $resultInsertUser = mysqli_query($conn, $insertUser);
+            // execute truyền dữ liệu theo thứ tự dấu ?
+            $resultInsertUser = $insertUser->execute([$username, $hashPassword]);
+
             if ($resultInsertUser) {
-                $user_id = mysqli_insert_id($conn);
+
+                // Lấy id user vừa insert
+                $user_id = $pdo->lastInsertId();
+
+                // Tạo session cho user
                 $_SESSION['user_id'] = $user_id;
-                echo json_encode(["success" => true, "msg" => "Register successfully!"]);
+
+                echo json_encode([
+                    "success" => true,
+                    "msg" => "Register successfully!"
+                ]);
             }
-            break;
-        case 'logout':
-            session_destroy();
-            echo json_encode(["success" => true]);
+
             break;
         default:
-            echo json_encode(["success" => false, "msg" => "Invalid action"]);
+
+            echo json_encode([
+                "success" => false,
+                "msg" => "Invalid action"
+            ]);
+
             break;
     }
 }
 
-//
+if ($method == "GET" && $action == "logout") {
+    // Huỷ session khi logout
+    session_destroy();
+
+    echo json_encode([
+        "success" => true
+    ]);
+}
+
+// Lấy thông tin user hiện tại
 if ($method == "GET" && $action == "getUser") {
-    // Neu chua dang ky tai khoan thi khong vao duoc
+
+    // Nếu chưa đăng nhập thì không cho truy cập
     if (!isset($_SESSION['user_id'])) {
-        echo json_encode((['success' => false, 'msg' => "Chưa đăng nhập ai cho vô vậy má !!!!!!"]));
+
+        echo json_encode([
+            'success' => false,
+            'msg' => "Chưa đăng nhập ai cho vô vậy má !!!!!!"
+        ]);
+
         exit;
     }
 
-    // Neu da dang ky thi lay user_id ra de select thong tin cua user do
-    $id = $_SESSION['user_id'];
+    // Lấy user_id từ session
+    $user_id = $_SESSION['user_id'];
 
-    $sql = "SELECT id, username FROM user WHERE id=$id";
-    $result = mysqli_query($conn, $sql);
-    $user = mysqli_fetch_assoc($result);
+    // Prepare statement để lấy thông tin user
+    $getUserById = $pdo->prepare(
+        "SELECT id, username FROM user WHERE id = ?"
+    );
+
+    // Truyền id vào dấu ?
+    $getUserById->execute([$user_id]);
+
+    // Lấy 1 user
+    $user = $getUserById->fetch();
 
     echo json_encode([
-        "user_id" => $id,
+        "user_id" => $user_id,
         "success" => true,
         "user" => $user
     ]);

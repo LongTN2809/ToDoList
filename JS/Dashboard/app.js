@@ -198,7 +198,6 @@ function sortTask() {
     let sortBy = document.querySelector("#sort").value;
     apiGetTasks(sortBy)
         .then((data) => {
-            console.log(data);
             list.innerHTML = "";
             data.forEach(todo => {
                 console.log(todo);
@@ -223,5 +222,6 @@ function loadToDo() {
             updateStats()
             checkTaskQuanity();
         })
+        .catch((err)=>console.log(err));
 }
 loadToDo();

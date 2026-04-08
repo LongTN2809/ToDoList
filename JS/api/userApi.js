@@ -19,7 +19,5 @@ export function apiRegister(data){
 }
 
 export function apiLogOut(){
-    return fetch("../PHP/api/user.php?action=logout", {
-    method: "POST"
-})
+    return fetch("../PHP/api/user.php?action=logout");
 }
