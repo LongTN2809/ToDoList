@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             window.location.href = "../../TO_DO_LIST_PROJECT/HTML/auth.html";
             console.log(result.msg);
         }else{
-            document.querySelector("#hello_user").innerText = result.user.username;
+            document.querySelector("#hello_user").innerText = `Xin chào ${result.user.username}`;
         }
     })
 })

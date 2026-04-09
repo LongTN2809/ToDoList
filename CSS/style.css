@@ -36,12 +36,20 @@ body {
   border-radius: 8px;
 }
 
+#hello_user {
+  text-transform: uppercase;
+  color: #6b8f71;
+  font-size: 50px;
+}
+
 header {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 15px;
+  color: #3d2b1f;
+  letter-spacing: 2px;
 }
 
 .list-icon {
@@ -368,10 +376,6 @@ hr {
   margin-bottom: 15px;
 }
 
-.hello_user{
-  color: rgb(0, 255, 221);
-}
-
 .auth-nav {
   display: flex;
   justify-content: flex-end;
@@ -400,4 +404,31 @@ hr {
 
 .auth-nav button:active {
   transform: scale(0.96);
+}
+.appear {
+  animation: appear 2s ease forwards;
+}
+
+.slide {
+  animation: slideFromTop 2s ease forwards;
+}
+
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
