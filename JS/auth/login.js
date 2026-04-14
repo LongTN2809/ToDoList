@@ -14,7 +14,7 @@ form.addEventListener("submit", (e) => {
         .then(response => response.json())
         .then(result => {
             if(result.success){
-                window.location.href = "../../TO_DO_LIST_PROJECT/HTML/index.html"
+                window.location.href = "../../To_Do_List_Project/HTML/index.html"
             }else{
             showFormError(result.msg);
             

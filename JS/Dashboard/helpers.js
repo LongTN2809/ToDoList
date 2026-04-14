@@ -40,5 +40,5 @@ function standardizeValue(inputValue) {
 }
 
 function goToAuth() {
-  window.location.href = "../../TO_DO_LIST_PROJECT/HTML/auth.html";
+  window.location.href = "../../To_Do_List_Project/HTML/auth.html";
 }
