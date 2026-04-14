@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     .then((response)=>response.json())
     .then((result)=>{
         if(!result.success){
-            window.location.href = "../../To_Do_List_Project/HTML/auth.html";
+            window.location.href = "auth.html";
             console.log(result.msg);
         }else{
             document.querySelector("#hello_user").innerText = `Xin chào ${result.user.username}`;
