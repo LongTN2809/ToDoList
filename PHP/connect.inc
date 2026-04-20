@@ -18,7 +18,7 @@ try {
 
 } catch(PDOException $e){
     header("Content-Type: application/json");
-    echo json_encode(["err" => "Can't connect to database"]);
+    echo json_encode(["err" => $e->getMessage()]);
     exit;
 }
 ?>
